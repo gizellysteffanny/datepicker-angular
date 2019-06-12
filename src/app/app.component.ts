@@ -136,6 +136,8 @@ export class AppComponent implements OnInit {
   }
 
   onDateSelection(date: NgbDate) {
+    let elem = document.querySelectorAll('.custom-day.range');
+    elem[elem.length - 1].classList.add('last-day-select');
     console.log(date);
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;

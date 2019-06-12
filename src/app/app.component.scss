@@ -26,6 +26,13 @@ div[tabindex="0"] {
   border-radius: 50%;
   position: relative;
   display: inline-block;
+
+  &.last-day-select {
+    &::before {
+      border-top-left-radius: 14px;
+      border-bottom-left-radius: 14px;
+    }
+  }
 }
 
 .custom-day.range::before {
@@ -38,6 +45,10 @@ div[tabindex="0"] {
   bottom: 0;
   right: 0;
   z-index: -1;
+  width: 32px;
+  height: 32px;
+  border-top-left-radius: 14px;
+  border-bottom-left-radius: 14px;
 }
 
 .custom-day.range,
