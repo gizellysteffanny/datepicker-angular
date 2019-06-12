@@ -1,18 +1,39 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to use ngx-echarts!
-  </h1>
+<!-- <div
+  echarts
+  theme="macarons"
+  class="chart"
+  [options]="options"
+  [merge]="mergeOption"
+  [loading]="loading"
+></div> -->
+
+<div class="container">
+  <p>Example of the range selection</p>
+
+  <ngb-datepicker
+    #dp
+    (select)="onDateSelection($event)"
+    [displayMonths]="1"
+    [dayTemplate]="t"
+    outsideDays="hidden"
+  >
+  </ngb-datepicker>
+
+  <ng-template #t let-date let-focused="focused">
+    <span
+      class="custom-day"
+      [class.focused]="focused"
+      [class.range]="isRange(date)"
+      [class.faded]="isHovered(date) || isInside(date)"
+      (mouseenter)="hoveredDate = date"
+      (mouseleave)="hoveredDate = null"
+    >
+      {{ date.day }}
+    </span>
+  </ng-template>
+
+  <hr />
+
+  <pre>From: {{ fromDate | json }} </pre>
+  <pre>To: {{ toDate | json }} </pre>
 </div>
-
-<h3>Easy to show an echarts: </h3>
-<div echarts [options]="options" class="chart"></div>
-
-<h3>Easy to choose a theme: </h3>
-<div echarts [options]="options" theme="macarons" class="chart"></div>
-
-<h3>Easy to update data asynchronous: <button (click)="getData()" style="padding: 0.5em;">Get Data</button></h3>
-<div echarts [options]="options" [merge]="mergeOption" [loading]="loading" class="chart"></div>
-
-<h3>Async pipe and graph chart </h3>
-<div echarts [options]="graphOption | async" class="chart-lg"></div>

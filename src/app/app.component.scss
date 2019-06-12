@@ -5,3 +5,49 @@
 .chart-lg {
   height: 700px;
 }
+
+.custom-day {
+  text-align: center;
+  padding: 0.185rem 0.25rem;
+  display: inline-block;
+  height: 2rem;
+  width: 2rem;
+  color: #8998ac;
+}
+
+div[tabindex="0"] {
+  span {
+    background-color: red;
+  }
+}
+
+.custom-day.range {
+  background-color: #3b7cff;
+  border-radius: 50%;
+  position: relative;
+  display: inline-block;
+}
+
+.custom-day.range::before {
+  content: "";
+  display: block;
+  background-color: #eaf6ff;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+}
+
+.custom-day.range,
+.custom-day:hover {
+  background-color: #3b7cff;
+  border-radius: 50%;
+  color: white;
+}
+.custom-day.faded {
+  background-color: #eaf6ff;
+  color: #8998ac;
+  border-radius: initial;
+}

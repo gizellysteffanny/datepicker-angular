@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 
 import { EChartOption } from 'echarts';
 import { gexf } from 'echarts/extension/dataTool';
+import {NgbCalendar, NgbDate} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-root',
@@ -14,16 +15,40 @@ import { gexf } from 'echarts/extension/dataTool';
 })
 export class AppComponent implements OnInit {
   options = {
+    textStyle: {
+      color: '#000',
+    },
     xAxis: {
       type: 'category',
-      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      data: ['10/06', '11/06', '12/06', '13/06', '14/06', '15/06', '16/06', '17/06', '18/06', '19/06', '20/06', '21/06', '22/06'],
+      axisLine: {
+        lineStyle: {
+          color: '#000',
+          width: 2,
+          type: 'solid',
+        }
+      }
     },
     yAxis: {
-      type: 'value'
+      type: 'value',
+      axisLine: {
+        lineStyle: {
+          color: '#000',
+          width: 2,
+          type: 'solid',
+        }
+      }
     },
     series: [{
-      data: [820, 932, 901, 934, 1290, 1330, 1320],
-      type: 'line'
+      symbol: 'circle',
+      itemStyle: {
+        color: '#4B92E1',
+        borderColor: null,
+      },
+      data: [3, 6.5, 3.8, 5, 5, 6.8, 4.2, 6.8, 4.3, 6, 5, 5, 6.7],
+      type: 'line',
+      smooth: false,
+      symbolSize: 18,
     }]
   };
 
@@ -32,7 +57,15 @@ export class AppComponent implements OnInit {
 
   graphOption: Observable<EChartOption>;
 
-  constructor(private api: MockServerService, private http: HttpClient) { }
+  hoveredDate: NgbDate;
+
+  fromDate: NgbDate;
+  toDate: NgbDate;
+
+  constructor(private api: MockServerService, private http: HttpClient, private calendar: NgbCalendar) {
+    this.fromDate = calendar.getToday();
+    this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
+  }
 
   ngOnInit() {
     this.graphOption = this.http.get('assets/les-miserables.gexf', { responseType: 'text' }).pipe(
@@ -100,5 +133,29 @@ export class AppComponent implements OnInit {
       })
       .catch(e => { /** Error Handler */ })
       .then(() => { this.loading = false; });
+  }
+
+  onDateSelection(date: NgbDate) {
+    console.log(date);
+    if (!this.fromDate && !this.toDate) {
+      this.fromDate = date;
+    } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
+      this.toDate = date;
+    } else {
+      this.toDate = null;
+      this.fromDate = date;
+    }
+  }
+
+  isHovered(date: NgbDate) {
+    return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
+  }
+
+  isInside(date: NgbDate) {
+    return date.after(this.fromDate) && date.before(this.toDate);
+  }
+
+  isRange(date: NgbDate) {
+    return date.equals(this.fromDate) || date.equals(this.toDate) || this.isInside(date) || this.isHovered(date);
   }
 }
