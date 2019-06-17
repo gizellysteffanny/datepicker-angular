@@ -8,7 +8,7 @@ import { EChartOption } from 'echarts';
 import { gexf } from 'echarts/extension/dataTool';
 import * as moment from 'moment';
 
-moment.locale();
+
 
 @Component({
   selector: 'app-root',
@@ -53,6 +53,9 @@ export class AppComponent implements OnInit {
       symbolSize: 18,
     }]
   };
+
+  days = ["2019-06-05T04:00:00.000Z",
+  "2019-06-08T04:00:00.000Z"];
 
   initialCount: Array<any> = [];
 
@@ -121,6 +124,8 @@ export class AppComponent implements OnInit {
         };
       })
     );
+
+    this.initialCount = this.formatArrayDateFromMoment(this.days);
   }
 
   getData() {
@@ -134,6 +139,19 @@ export class AppComponent implements OnInit {
   }
 
   oneDaySelection() {
-    console.log(this.initialCount);
+    console.log(JSON.stringify(this.initialCount));
+  }
+
+  formatArrayDateFromMoment(days: string[]) {
+    const allDays = [];
+    for (let index = 0; index < days.length; index++) {
+      const day = new Date(days[index]);
+
+      allDays.push(
+        moment().date(day.getDate()).month(day.getMonth()).year(day.getFullYear()).startOf('day')
+      );
+    }
+
+    return allDays;
   }
 }
