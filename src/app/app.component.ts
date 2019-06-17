@@ -6,7 +6,9 @@ import { map } from 'rxjs/operators';
 
 import { EChartOption } from 'echarts';
 import { gexf } from 'echarts/extension/dataTool';
-import {NgbCalendar, NgbDate} from '@ng-bootstrap/ng-bootstrap';
+import * as moment from 'moment';
+
+moment.locale();
 
 @Component({
   selector: 'app-root',
@@ -52,19 +54,15 @@ export class AppComponent implements OnInit {
     }]
   };
 
+  initialCount: Array<any> = [];
+
   mergeOption: any;
   loading = false;
 
+
   graphOption: Observable<EChartOption>;
 
-  hoveredDate: NgbDate;
-
-  fromDate: NgbDate;
-  toDate: NgbDate;
-
-  constructor(private api: MockServerService, private http: HttpClient, private calendar: NgbCalendar) {
-    this.fromDate = calendar.getToday();
-    this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
+  constructor(private api: MockServerService, private http: HttpClient) {
   }
 
   ngOnInit() {
@@ -135,29 +133,7 @@ export class AppComponent implements OnInit {
       .then(() => { this.loading = false; });
   }
 
-  onDateSelection(date: NgbDate) {
-    let elem = document.querySelectorAll('.custom-day.range');
-    elem[elem.length - 1].classList.add('last-day-select');
-    console.log(date);
-    if (!this.fromDate && !this.toDate) {
-      this.fromDate = date;
-    } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
-      this.toDate = date;
-    } else {
-      this.toDate = null;
-      this.fromDate = date;
-    }
-  }
-
-  isHovered(date: NgbDate) {
-    return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
-  }
-
-  isInside(date: NgbDate) {
-    return date.after(this.fromDate) && date.before(this.toDate);
-  }
-
-  isRange(date: NgbDate) {
-    return date.equals(this.fromDate) || date.equals(this.toDate) || this.isInside(date) || this.isHovered(date);
+  oneDaySelection() {
+    console.log(this.initialCount);
   }
 }

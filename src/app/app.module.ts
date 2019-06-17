@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { NgxEchartsModule } from 'ngx-echarts';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MultipleDatePickerModule } from 'multiple-date-picker-angular';
 
 import { AppComponent } from './app.component';
 
@@ -17,7 +18,8 @@ import { AppComponent } from './app.component';
     NgxEchartsModule,
     HttpClientModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    MultipleDatePickerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
