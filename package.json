@@ -23,6 +23,7 @@
     "@ng-bootstrap/ng-bootstrap": "^4.2.1",
     "core-js": "^2.5.4",
     "echarts": "^4.1.0",
+    "moment": "2.18.1",
     "multiple-date-picker-angular": "^3.0.0",
     "ngx-echarts": "^4.1.0",
     "rxjs": "6.0.0",

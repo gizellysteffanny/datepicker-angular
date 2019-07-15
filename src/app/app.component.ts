@@ -66,6 +66,9 @@ export class AppComponent implements OnInit {
   graphOption: Observable<EChartOption>;
 
   constructor(private api: MockServerService, private http: HttpClient) {
+    moment.locale('es');
+
+    console.log(moment.lang());
   }
 
   ngOnInit() {
